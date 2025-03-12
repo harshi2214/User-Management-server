@@ -1,13 +1,16 @@
 const jsonServer = require("json-server");
+const path = require("path");
+const cors = require("cors");
+
 const server = jsonServer.create();
-const router = jsonServer.router("Data/db.json");
+const router = jsonServer.router(path.join(__dirname, "Data", "db.json")); // Correct folder name
 const middleware = jsonServer.defaults();
 
-const cors = require("cors");
 server.use(cors());
 server.use(middleware);
 server.use(router);
 
-server.listen(3000, () => {
-  console.log("Server is Running at http://localhost:3000");
+const PORT = process.env.PORT || 3000; // Use dynamic port for Render deployment
+server.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
